@@ -31,7 +31,7 @@ func _ready():
 			var player_position = Vector2()
 			player_position.x = -get_width() / 2 + character.get_width() / 2 + 5
 			character.position = player_position
-		character.power = character_power[i]
+		character.set_power(character_power[i])
 		add_child(character)
 
 func add_player(player: Player):

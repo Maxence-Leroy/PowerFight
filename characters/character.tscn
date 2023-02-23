@@ -13,3 +13,14 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+margin_bottom = -40.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "42"
+align = 1
