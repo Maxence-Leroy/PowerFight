@@ -47,5 +47,4 @@ func move_to_right_place():
 					min_distance = distance
 					min_index = index
 			index += 1
-		position = (colliding_places[min_index] as Area2D).position
-		
+		Constants.move_player_to_place(self, colliding_places[min_index])
