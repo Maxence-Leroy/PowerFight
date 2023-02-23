@@ -9,6 +9,8 @@ export(Array, CharacterType) var character_type
 const EnnemyResource = preload("res://characters/ennemy.tscn")
 const PlayerResource = preload("res://characters/player.tscn")
 
+var npcs = []
+
 func get_width():
 	return ($CollisionShape2D.shape as RectangleShape2D).extents.x * 2
 
@@ -22,8 +24,6 @@ func _ready():
 	for type in character_type:
 		if type != CharacterType.PLAYER:
 			number_of_characters_not_player += 1
-			
-	var not_player_characters_placed = 0
 	
 	for i in range(0, number_of_characters, 1):
 		var character: Character
@@ -31,9 +31,9 @@ func _ready():
 		if character_type[i] == CharacterType.ENNEMY:
 			character = EnnemyResource.instance()
 			var ennemy_position = Vector2()
-			ennemy_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - not_player_characters_placed - 1)
+			ennemy_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - npcs.size() - 1)
 			character.position = ennemy_position
-			not_player_characters_placed += 1
+			npcs.append(character)
 		if character_type[i] == CharacterType.PLAYER:
 			character = PlayerResource.instance()
 			var player_position = Vector2()
@@ -45,9 +45,34 @@ func _ready():
 func add_player(player: Player):
 	_move_player(player)
 
+		
+
 func _move_player(player: Player):
+	player.input_pickable = false
 	player.get_parent().remove_child(player)
 	add_child(player)
 	var player_position = Vector2()
 	player_position.x =  -get_width() / 2 + player.get_width() / 2 + 5
 	player.position = player_position
+	yield(get_tree().create_timer(1.0), "timeout")
+	_handle_interaction(player)
+	
+func _handle_interaction(player: Player):
+	var character = npcs[0]
+	if character is Ennemy:
+		_fight(player, character)	
+	
+	npcs.remove(0)
+	if !npcs.empty():
+		yield(get_tree().create_timer(1.0), "timeout")
+		_handle_interaction(player)
+	else:
+		player.input_pickable = true
+
+func _fight(player: Player, ennemy: Ennemy):
+	if player.power > ennemy.power:
+		player.set_power(player.power + ennemy.power)
+		ennemy.queue_free()
+	else:
+		ennemy.power += player.power
+		player.queue_free()

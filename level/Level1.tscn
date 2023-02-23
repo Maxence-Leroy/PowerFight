@@ -6,11 +6,13 @@
 
 [node name="Room2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 704, 75 )
-character_power = [ 10, 20 ]
+character_power = [ 8, 15 ]
 character_type = [ 1, 1 ]
 
 [node name="Room3" parent="." instance=ExtResource( 2 )]
 position = Vector2( 703, 249 )
+character_power = [ 4 ]
+character_type = [ 1 ]
 
 [node name="Room" parent="." instance=ExtResource( 2 )]
 position = Vector2( 199, 74 )
