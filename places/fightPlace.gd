@@ -18,14 +18,22 @@ func _ready():
 	assert(character_power.size() == character_type.size(), "Arrays' size must be the same")
 	
 	var number_of_characters = character_power.size()
+	var number_of_characters_not_player = 0
+	for type in character_type:
+		if type != CharacterType.PLAYER:
+			number_of_characters_not_player += 1
+			
+	var not_player_characters_placed = 0
+	
 	for i in range(0, number_of_characters, 1):
 		var character: Character
 		
 		if character_type[i] == CharacterType.ENNEMY:
 			character = EnnemyResource.instance()
 			var ennemy_position = Vector2()
-			ennemy_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*i
+			ennemy_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - not_player_characters_placed - 1)
 			character.position = ennemy_position
+			not_player_characters_placed += 1
 		if character_type[i] == CharacterType.PLAYER:
 			character = PlayerResource.instance()
 			var player_position = Vector2()
