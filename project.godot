@@ -13,15 +13,25 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "Area2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://characters/player.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": ""
+"GitAPI": "",
+"Player": ""
 }
 
 [application]
 
 config/name="PowerFight"
 config/icon="res://icon.png"
+
+[autoload]
+
+Constants="*res://level/constant.gd"
 
 [editor]
 

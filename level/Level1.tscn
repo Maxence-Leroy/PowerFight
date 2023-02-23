@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://characters/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://places/fightPlace.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/ennemy.tscn" type="PackedScene" id=3]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Room2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 371, 74 )
+
+[node name="Ennemy" parent="Room2" instance=ExtResource( 3 )]
+position = Vector2( 21, -2 )
+
+[node name="Room3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 372, 253 )
+
+[node name="Ennemy2" parent="Room3" instance=ExtResource( 3 )]
+position = Vector2( 42, 5 )
+
+[node name="Room" parent="." instance=ExtResource( 2 )]
+position = Vector2( 103, 77 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 99, 81 )
