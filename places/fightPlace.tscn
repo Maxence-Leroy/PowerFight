@@ -3,7 +3,7 @@
 [ext_resource path="res://places/fightPlace.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 100, 75 )
+extents = Vector2( 200, 75 )
 
 [sub_resource type="Gradient" id=2]
 colors = PoolColorArray( 0, 1, 0, 1, 0, 1, 0, 1 )
@@ -22,5 +22,5 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 200, 150 )
+scale = Vector2( 400, 150 )
 texture = SubResource( 3 )

@@ -1,4 +1,4 @@
-extends Area2D
+extends Character
 
 class_name Player
 
