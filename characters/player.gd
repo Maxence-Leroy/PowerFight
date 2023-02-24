@@ -2,6 +2,8 @@ extends Character
 
 class_name Player
 
+signal moved_to_place(new_place)
+
 var can_grab = false
 var grabbed_offset = Vector2()
 var colliding_places = []
@@ -47,4 +49,5 @@ func move_to_right_place():
 					min_distance = distance
 					min_index = index
 			index += 1
-		Constants.move_player_to_place(self, colliding_places[min_index])
+		var new_place = colliding_places[min_index]
+		emit_signal("moved_to_place", new_place)
