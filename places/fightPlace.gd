@@ -2,6 +2,8 @@ extends Area2D
 
 class_name FightPlace
 
+signal place_cleared
+
 enum CharacterType {PLAYER, ENNEMY}
 export(Array, int) var character_power
 export(Array, CharacterType) var character_type
@@ -68,6 +70,7 @@ func _handle_interaction(player: Player):
 			_handle_interaction(player)
 		else:
 			player.input_pickable = true
+			emit_signal("place_cleared")
 	else:
 		player.emit_signal("player_died")
 
