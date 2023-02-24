@@ -8,6 +8,7 @@ func _ready():
 	player = find_node("Player", true, false)
 	if player != null:
 		player.connect("moved_to_place", self, "_on_player_moved_to_new_place")
+		player.connect("player_died", self, "_on_player_died")
 	
 func _on_player_moved_to_new_place(new_place: Area2D):
 	var place = new_place as FightPlace
@@ -15,3 +16,5 @@ func _on_player_moved_to_new_place(new_place: Area2D):
 		return
 	place.add_player(player)
 
+func _on_player_died():
+	pass

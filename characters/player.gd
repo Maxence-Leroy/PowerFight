@@ -3,6 +3,7 @@ extends Character
 class_name Player
 
 signal moved_to_place(new_place)
+signal player_died
 
 var can_grab = false
 var grabbed_offset = Vector2()

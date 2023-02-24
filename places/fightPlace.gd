@@ -45,8 +45,6 @@ func _ready():
 func add_player(player: Player):
 	_move_player(player)
 
-		
-
 func _move_player(player: Player):
 	player.input_pickable = false
 	player.get_parent().remove_child(player)
@@ -59,20 +57,26 @@ func _move_player(player: Player):
 	
 func _handle_interaction(player: Player):
 	var character = npcs[0]
+	var victory: bool
 	if character is Ennemy:
-		_fight(player, character)	
+		victory = _fight(player, character)	
 	
-	npcs.remove(0)
-	if !npcs.empty():
-		yield(get_tree().create_timer(1.0), "timeout")
-		_handle_interaction(player)
+	if victory:
+		npcs.remove(0)
+		if !npcs.empty():
+			yield(get_tree().create_timer(1.0), "timeout")
+			_handle_interaction(player)
+		else:
+			player.input_pickable = true
 	else:
-		player.input_pickable = true
+		player.emit_signal("player_died")
 
 func _fight(player: Player, ennemy: Ennemy):
 	if player.power > ennemy.power:
 		player.set_power(player.power + ennemy.power)
 		ennemy.queue_free()
+		return true
 	else:
 		ennemy.power += player.power
 		player.queue_free()
+		return false
