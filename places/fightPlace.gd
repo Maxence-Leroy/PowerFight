@@ -7,6 +7,7 @@ signal place_cleared
 enum CharacterType {PLAYER, ENNEMY, ADDITIVE_TREASURE }
 export(Array, int) var character_power
 export(Array, CharacterType) var character_type
+export(Array, bool) var character_objective
 
 const EnnemyResource = preload("res://characters/ennemy.tscn")
 const PlayerResource = preload("res://characters/player.tscn")
@@ -21,6 +22,7 @@ func _ready():
 	add_to_group(Constants.fight_place_group)
 	
 	assert(character_power.size() == character_type.size(), "Arrays' size must be the same")
+	assert(character_power.size() == character_objective.size(), "Arrays' size must be the same")
 	
 	var number_of_characters = character_power.size()
 	var number_of_characters_not_player = 0
@@ -46,6 +48,8 @@ func _ready():
 			character.position = character_position
 			npcs.append(character)
 		character.set_power(character_power[i])
+		if character_objective[i]:
+			character.set_is_objective()
 		add_child(character)
 
 func add_player(player: Player):
@@ -85,12 +89,15 @@ func _fight(player: Player, ennemy: Ennemy):
 	if player.power > ennemy.power:
 		player.set_power(player.power + ennemy.power)
 		ennemy.queue_free()
+		remove_child(ennemy)
 		return true
 	else:
 		ennemy.power += player.power
 		player.queue_free()
+		remove_child(player)
 		return false
 
 func _take_treasure(player: Player, treasure: AdditiveTreasure):
 	player.set_power(player.power + treasure.power)
 	treasure.queue_free()
+	remove_child(treasure)

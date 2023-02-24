@@ -14,7 +14,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Label" type="Label" parent="."]
+[node name="PowerLabel" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -20.0
@@ -24,3 +24,13 @@ margin_bottom = -40.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "42"
 align = 1
+
+[node name="ObjectiveLabel" type="Label" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 26.0
+margin_top = -49.0
+margin_right = 49.0
+margin_bottom = -34.0
+text = "OBJ"

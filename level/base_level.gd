@@ -2,7 +2,7 @@ extends Node2D
 
 class_name BaseLevel
 
-enum LevelObjective {KILL_EVERYONE}
+enum LevelObjective {KILL_EVERYONE, GET_OBJECTIVES}
 export(LevelObjective) var objective
 
 var player: Player = null
@@ -21,6 +21,12 @@ func _ready():
 	for child in children:
 		if child is FightPlace:
 			child.connect("place_cleared", self, "_on_fight_place_cleared")
+
+func _all_objectives_collected():
+	print_tree_pretty()
+	var objectives = get_tree().get_nodes_in_group(Constants.objective_group)
+	print(objectives)
+	return objectives.empty()
 	
 func _on_player_moved_to_new_place(new_place: Area2D):
 	var place = new_place as FightPlace
@@ -35,6 +41,9 @@ func _on_fight_place_cleared():
 	if objective == LevelObjective.KILL_EVERYONE:
 		var ennemy = find_node("Ennemy", true, false)
 		if ennemy == null:
+			_on_success()
+	elif objective == LevelObjective.GET_OBJECTIVES:
+		if _all_objectives_collected():
 			_on_success()
 
 func _on_success():
