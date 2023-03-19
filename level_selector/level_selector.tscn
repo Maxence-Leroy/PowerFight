@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://level_selector/level_selector.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+number_of_level = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Sélectionne ton niveau"
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 18.0
+columns = 5
