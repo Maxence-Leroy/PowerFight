@@ -83,7 +83,7 @@ func _handle_interaction(player: Player):
 			player.input_pickable = true
 			emit_signal("place_cleared")
 	else:
-		player.emit_signal("player_died")
+		player.player_died()
 
 func _fight(player: Player, ennemy: Ennemy):
 	if player.power > ennemy.power:

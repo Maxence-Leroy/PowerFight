@@ -14,8 +14,12 @@ func _ready():
 	success_container.hide()
 	player = find_node("Player", true, false)
 	if player != null:
-		player.connect("moved_to_place", self, "_on_player_moved_to_new_place")
-		player.connect("player_died", self, "_on_player_died")
+		var error = player.connect("moved_to_place", self, "_on_player_moved_to_new_place")
+		if error != OK:
+			print("Impossible de connecter le signal moved_to_place : " + str(error))
+		error = player.connect("player_died", self, "_on_player_died")
+		if error != OK:
+			print("Impossible de connecter le signal player_died : " + str(error))
 	
 	var children = get_children()
 	for child in children:
@@ -23,9 +27,7 @@ func _ready():
 			child.connect("place_cleared", self, "_on_fight_place_cleared")
 
 func _all_objectives_collected():
-	print_tree_pretty()
 	var objectives = get_tree().get_nodes_in_group(Constants.objective_group)
-	print(objectives)
 	return objectives.empty()
 	
 func _on_player_moved_to_new_place(new_place: Area2D):
@@ -50,4 +52,9 @@ func _on_success():
 	success_container.show()
 
 func _on_restart_pressed():
-	get_tree().reload_current_scene()
+	var error = get_tree().reload_current_scene()
+	if error != OK:
+		print("Impossible de recharger le niveau : " + str(error))
+
+func _on_next_pressed():
+	Constants.go_to_next_level()

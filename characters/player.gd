@@ -35,6 +35,9 @@ func _on_colling_finish(area):
 		if place_index != -1:
 			colliding_places.remove(place_index)
 
+func player_died():
+	emit_signal("player_died")
+
 func move_to_right_place():
 	if colliding_places.empty():
 		position = initial_position

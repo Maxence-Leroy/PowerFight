@@ -98,4 +98,4 @@ margin_bottom = 44.0
 text = "Continuer"
 
 [connection signal="pressed" from="CanvasLayer/GameOverContainer/PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton" to="." method="_on_next_pressed"]
