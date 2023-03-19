@@ -8,6 +8,7 @@ export(LevelObjective) var objective
 var player: Player = null
 onready var game_over_container: CenterContainer = $CanvasLayer/GameOverContainer
 onready var success_container: CenterContainer = $CanvasLayer/SuccessContainer
+onready var success_button: Button = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton
 
 func _ready():
 	game_over_container.hide()
@@ -49,6 +50,10 @@ func _on_fight_place_cleared():
 			_on_success()
 
 func _on_success():
+	if Constants.has_next_level():
+		success_button.text = "Continue"
+	else:
+		success_button.text = "Fin du jeu"
 	success_container.show()
 
 func _on_restart_pressed():
@@ -57,4 +62,5 @@ func _on_restart_pressed():
 		print("Impossible de recharger le niveau : " + str(error))
 
 func _on_next_pressed():
-	Constants.go_to_next_level()
+	if Constants.has_next_level():
+		Constants.go_to_next_level()
