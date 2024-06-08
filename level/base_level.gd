@@ -9,10 +9,13 @@ var player: Player = null
 onready var game_over_container: CenterContainer = $CanvasLayer/GameOverContainer
 onready var success_container: CenterContainer = $CanvasLayer/SuccessContainer
 onready var success_button: Button = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton
+onready var rooms: Node2D = $Rooms
+onready var camera: PFCamera = $PFCamera
 
 func _ready():
 	game_over_container.hide()
 	success_container.hide()
+	_place_rooms()
 	player = find_node("Player", true, false)
 	if player != null:
 		var error = player.connect("moved_to_place", self, "_on_player_moved_to_new_place")
@@ -26,6 +29,33 @@ func _ready():
 	for child in children:
 		if child is FightPlace:
 			child.connect("place_cleared", self, "_on_fight_place_cleared")
+
+func _place_rooms():
+	var list_of_rooms = rooms.get_children()
+	var room_width = (list_of_rooms[0] as FightPlace).get_width()
+	var room_height = (list_of_rooms[0] as FightPlace).get_height()
+	var screen_size = get_viewport_rect().size
+	var number_of_columns = 2
+	var space_between_columns = (screen_size.x - number_of_columns * room_width) / (number_of_columns - 1)
+	var space_between_lines = 20
+	var max_line = 0
+	var max_column = 0
+	for room in list_of_rooms:
+		var typed_room = room as FightPlace
+		var room_name: String = typed_room.name
+		var splitted_name = room_name.split("-")
+		var id_column = int(splitted_name[0])
+		var id_line = int(splitted_name[1])
+		max_column = max(id_column, max_column)
+		max_line = max(id_line, max_line)
+		typed_room.position = Vector2(
+			room_width / 2 + id_column * (room_width + space_between_columns),
+			room_height / 2 +id_line * (room_height + space_between_lines)
+		)
+	camera.limit_top = 0
+	camera.limit_bottom = (max_line + 1) * room_height + max_line * space_between_lines
+	camera.limit_left = 0
+	camera.limit_right = (max_column + 1) * room_width + max_column * space_between_columns
 
 func _all_objectives_collected():
 	var objectives = get_tree().get_nodes_in_group(Constants.objective_group)

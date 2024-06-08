@@ -6,21 +6,21 @@
 [node name="Node2D" instance=ExtResource( 1 )]
 objective = 1
 
-[node name="Room3" parent="." index="0" instance=ExtResource( 2 )]
-position = Vector2( 703, 249 )
-character_power = [ 4, 2 ]
-character_type = [ 1, 2 ]
-character_objective = [ false, true ]
-
-[node name="Room" parent="." index="1" instance=ExtResource( 2 )]
-position = Vector2( 199, 74 )
-character_power = [ 5 ]
-character_type = [ 0 ]
-character_objective = [ false ]
-
 [node name="SuccessContainer" parent="CanvasLayer" index="1"]
 visible = false
 
 [node name="PanelContainer" parent="CanvasLayer/SuccessContainer" index="0"]
 margin_right = 2.0
 margin_bottom = 2.0
+
+[node name="1-0" parent="Rooms" index="0" instance=ExtResource( 2 )]
+position = Vector2( 703, 249 )
+character_power = [ 4, 2 ]
+character_type = [ 1, 2 ]
+character_objective = [ false, true ]
+
+[node name="0-0" parent="Rooms" index="1" instance=ExtResource( 2 )]
+position = Vector2( 199, 74 )
+character_power = [ 5 ]
+character_type = [ 0 ]
+character_objective = [ false ]

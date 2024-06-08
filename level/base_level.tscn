@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://level/base_level.gd" type="Script" id=1]
+[ext_resource path="res://camera/pf_camera.gd" type="Script" id=2]
 
 [sub_resource type="Theme" id=1]
 
@@ -96,6 +97,12 @@ margin_top = 24.0
 margin_right = 80.0
 margin_bottom = 44.0
 text = "Continuer"
+
+[node name="Rooms" type="Node2D" parent="."]
+
+[node name="PFCamera" type="Camera2D" parent="."]
+current = true
+script = ExtResource( 2 )
 
 [connection signal="pressed" from="CanvasLayer/GameOverContainer/PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton" to="." method="_on_next_pressed"]

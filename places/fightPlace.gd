@@ -18,6 +18,9 @@ var npcs = []
 func get_width():
 	return ($CollisionShape2D.shape as RectangleShape2D).extents.x * 2
 
+func get_height():
+	return ($CollisionShape2D.shape as RectangleShape2D).extents.y * 2
+
 func _ready():
 	add_to_group(Constants.fight_place_group)
 	

@@ -5,27 +5,45 @@
 
 [node name="Node2D" instance=ExtResource( 1 )]
 
-[node name="Room2" parent="." index="0" instance=ExtResource( 2 )]
-position = Vector2( 704, 75 )
-character_power = [ 8, 15 ]
-character_type = [ 1, 1 ]
-character_objective = [ false, false ]
-
-[node name="Room3" parent="." index="1" instance=ExtResource( 2 )]
-position = Vector2( 703, 249 )
-character_power = [ 4, 2 ]
-character_type = [ 1, 2 ]
-character_objective = [ false, false ]
-
-[node name="Room" parent="." index="2" instance=ExtResource( 2 )]
-position = Vector2( 199, 74 )
-character_power = [ 5 ]
-character_type = [ 0 ]
-character_objective = [ false ]
-
 [node name="SuccessContainer" parent="CanvasLayer" index="1"]
 visible = false
 
 [node name="PanelContainer" parent="CanvasLayer/SuccessContainer" index="0"]
 margin_right = 2.0
 margin_bottom = 2.0
+
+[node name="0-0" parent="Rooms" index="0" instance=ExtResource( 2 )]
+position = Vector2( 199, 74 )
+character_power = [ 5 ]
+character_type = [ 0 ]
+character_objective = [ false ]
+
+[node name="1-0" parent="Rooms" index="1" instance=ExtResource( 2 )]
+position = Vector2( 704, 75 )
+character_power = [ 8, 15 ]
+character_type = [ 1, 1 ]
+character_objective = [ false, false ]
+
+[node name="1-1" parent="Rooms" index="2" instance=ExtResource( 2 )]
+position = Vector2( 703, 249 )
+character_power = [ 4, 2 ]
+character_type = [ 1, 2 ]
+character_objective = [ false, false ]
+
+[node name="1-2" parent="Rooms" index="3" instance=ExtResource( 2 )]
+position = Vector2( 1406, 498 )
+character_power = [ 4, 2 ]
+character_type = [ 1, 2 ]
+character_objective = [ false, false ]
+
+[node name="1-3" parent="Rooms" index="4" instance=ExtResource( 2 )]
+position = Vector2( 2812, 996 )
+character_power = [ 4, 2 ]
+character_type = [ 1, 2 ]
+character_objective = [ false, false ]
+
+[node name="2-0" parent="Rooms" index="5" instance=ExtResource( 2 )]
+position = Vector2( 398, 148 )
+character_power = [ 5 ]
+character_type = [ 0 ]
+character_objective = [ false ]
