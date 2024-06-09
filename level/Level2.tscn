@@ -11,8 +11,8 @@ level_id = 2
 visible = false
 
 [node name="PanelContainer" parent="CanvasLayer/SuccessContainer" index="0"]
-margin_right = 2.0
-margin_bottom = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
 
 [node name="1-0" parent="Rooms" index="0" instance=ExtResource( 2 )]
 position = Vector2( 703, 249 )

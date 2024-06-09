@@ -5,9 +5,9 @@ class_name FightPlace
 signal place_cleared
 
 enum CharacterType {PLAYER, ENNEMY, ADDITIVE_TREASURE }
-export(Array, int) var character_power
-export(Array, CharacterType) var character_type
-export(Array, bool) var character_objective
+@export var character_power: Array[int]
+@export var character_type: Array[CharacterType]
+@export var character_objective: Array[bool]
 
 const EnnemyResource = preload("res://characters/ennemy.tscn")
 const PlayerResource = preload("res://characters/player.tscn")
@@ -37,15 +37,15 @@ func _ready():
 		var character: Character
 		
 		if character_type[i] == CharacterType.PLAYER:
-			character = PlayerResource.instance()
+			character = PlayerResource.instantiate()
 			var player_position = Vector2()
 			player_position.x = -get_width() / 2 + character.get_width() / 2 + 5
 			character.position = player_position
 		else:
 			if character_type[i] == CharacterType.ENNEMY:
-				character = EnnemyResource.instance()
+				character = EnnemyResource.instantiate()
 			elif character_type[i] == CharacterType.ADDITIVE_TREASURE:
-				character = AdditiveTreasureResource.instance()
+				character = AdditiveTreasureResource.instantiate()
 			var character_position = Vector2()
 			character_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - npcs.size() - 1)
 			character.position = character_position
@@ -65,11 +65,11 @@ func _move_player(player: Player):
 	var player_position = Vector2()
 	player_position.x =  -get_width() / 2 + player.get_width() / 2 + 5
 	player.position = player_position
-	yield(get_tree().create_timer(1.0), "timeout")
+	await get_tree().create_timer(1.0).timeout
 	_handle_interaction(player)
 	
 func _handle_interaction(player: Player):
-	if !npcs.empty():
+	if !npcs.is_empty():
 		var character = npcs[0]
 		var victory: bool
 		if character is Ennemy:
@@ -79,9 +79,9 @@ func _handle_interaction(player: Player):
 			victory = true
 		
 		if victory:
-			npcs.remove(0)
-			if !npcs.empty():
-				yield(get_tree().create_timer(1.0), "timeout")
+			npcs.remove_at(0)
+			if !npcs.is_empty():
+				await get_tree().create_timer(1.0).timeout
 				_handle_interaction(player)
 			else:
 				player.input_pickable = true

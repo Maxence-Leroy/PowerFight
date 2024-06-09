@@ -7,7 +7,7 @@ const zoom_min = 0.6
 var zoom_max = 4
 
 func _ready():
-	smoothing_enabled = false
+	position_smoothing_enabled = false
 
 func set_limits(i_limit_top: int, i_limit_bottom: int, i_limit_left: int, i_limit_right: int):
 	limit_top = i_limit_top

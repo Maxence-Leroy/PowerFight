@@ -3,34 +3,34 @@ extends Node2D
 class_name BaseLevel
 
 enum LevelObjective {KILL_EVERYONE, GET_OBJECTIVES}
-export(LevelObjective) var objective
-export(int) var level_id
+@export var objective: LevelObjective
+@export var level_id: int
 
 var player: Player = null
 var moves = 0
-onready var game_over_container: CenterContainer = $CanvasLayer/GameOverContainer
-onready var success_container: CenterContainer = $CanvasLayer/SuccessContainer
-onready var success_button: Button = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton
-onready var success_label: Label = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/Label
-onready var rooms: Node2D = $Rooms
-onready var camera: PFCamera = $PFCamera
+@onready var game_over_container: CenterContainer = $CanvasLayer/GameOverContainer
+@onready var success_container: CenterContainer = $CanvasLayer/SuccessContainer
+@onready var success_button: Button = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton
+@onready var success_label: Label = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/Label
+@onready var rooms: Node2D = $Rooms
+@onready var camera: PFCamera = $PFCamera
 
 func _ready():
 	game_over_container.hide()
 	success_container.hide()
 	_place_rooms()
-	player = find_node("Player", true, false)
+	player = find_child("Player", true, false)
 	if player != null:
-		var error = player.connect("moved_to_place", self, "_on_player_moved_to_new_place")
+		var error = player.connect("moved_to_place", Callable(self, "_on_player_moved_to_new_place"))
 		if error != OK:
 			print("Impossible de connecter le signal moved_to_place : " + str(error))
-		error = player.connect("player_died", self, "_on_player_died")
+		error = player.connect("player_died_signal", Callable(self, "_on_player_died"))
 		if error != OK:
-			print("Impossible de connecter le signal player_died : " + str(error))
+			print("Impossible de connecter le signal player_died_signal : " + str(error))
 	
 	for room in rooms.get_children():
 		if room is FightPlace:
-			room.connect("place_cleared", self, "_on_fight_place_cleared")
+			room.connect("place_cleared", Callable(self, "_on_fight_place_cleared"))
 
 func _place_rooms():
 	var list_of_rooms = rooms.get_children()
@@ -62,7 +62,7 @@ func _place_rooms():
 
 func _all_objectives_collected():
 	var objectives = get_tree().get_nodes_in_group(Constants.objective_group)
-	return objectives.empty()
+	return objectives.is_empty()
 	
 func _on_player_moved_to_new_place(new_place: Area2D):
 	var place = new_place as FightPlace
@@ -76,7 +76,7 @@ func _on_player_died():
 
 func _on_fight_place_cleared():
 	if objective == LevelObjective.KILL_EVERYONE:
-		var ennemy = find_node("Ennemy", true, false)
+		var ennemy = find_child("Ennemy", true, false)
 		if ennemy == null:
 			_on_success()
 	elif objective == LevelObjective.GET_OBJECTIVES:
@@ -94,19 +94,20 @@ func _on_success():
 func _save(id: int, nb_moves: int):
 	var str_id = str(id)
 	var path = "user://savegame.save"
-	var save_game = File.new()
-	save_game.open(path, File.READ)
+	var save_game = FileAccess.open(path, FileAccess.READ)
 	var dict = {}
-	if save_game.get_len() > 0:
-		dict = parse_json(save_game.get_line())
+	if save_game.get_length() > 0:
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(save_game.get_line())
+		dict = test_json_conv.get_data()
 	save_game.close()
-	save_game.open(path, File.WRITE)
+	save_game = FileAccess.open(path, FileAccess.WRITE)
 	if dict.has(str_id):
 		if nb_moves < dict[str_id]:
 			dict[str_id] = nb_moves
 	else:
 		dict[str_id] = nb_moves
-	save_game.store_line(to_json(dict))
+	save_game.store_line(JSON.new().stringify(dict))
 	save_game.close()
 
 func _on_restart_pressed():
@@ -119,6 +120,6 @@ func _on_next_pressed():
 		Constants.go_to_next_level()
 
 func _on_go_back_to_menu_pressed():
-	var error = get_tree().change_scene("res://level_selector/level_selector.tscn")
+	var error = get_tree().change_scene_to_file("res://level_selector/level_selector.tscn")
 	if error != OK:
 		print("Impossible de retourner au menu : " + str(error))
