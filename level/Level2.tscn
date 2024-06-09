@@ -5,6 +5,7 @@
 
 [node name="Node2D" instance=ExtResource( 1 )]
 objective = 1
+level_id = 2
 
 [node name="SuccessContainer" parent="CanvasLayer" index="1"]
 visible = false

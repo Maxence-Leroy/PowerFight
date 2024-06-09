@@ -4,6 +4,7 @@
 [ext_resource path="res://places/fightPlace.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" instance=ExtResource( 1 )]
+level_id = 1
 
 [node name="SuccessContainer" parent="CanvasLayer" index="1"]
 visible = false
@@ -45,5 +46,5 @@ character_objective = [ false, false ]
 [node name="2-0" parent="Rooms" index="5" instance=ExtResource( 2 )]
 position = Vector2( 398, 148 )
 character_power = [ 5 ]
-character_type = [ 0 ]
+character_type = [ 1 ]
 character_objective = [ false ]

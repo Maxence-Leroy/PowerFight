@@ -69,24 +69,27 @@ func _move_player(player: Player):
 	_handle_interaction(player)
 	
 func _handle_interaction(player: Player):
-	var character = npcs[0]
-	var victory: bool
-	if character is Ennemy:
-		victory = _fight(player, character)	
-	elif character is AdditiveTreasure:
-		_take_treasure(player, character)
-		victory = true
-	
-	if victory:
-		npcs.remove(0)
-		if !npcs.empty():
-			yield(get_tree().create_timer(1.0), "timeout")
-			_handle_interaction(player)
+	if !npcs.empty():
+		var character = npcs[0]
+		var victory: bool
+		if character is Ennemy:
+			victory = _fight(player, character)	
+		elif character is AdditiveTreasure:
+			_take_treasure(player, character)
+			victory = true
+		
+		if victory:
+			npcs.remove(0)
+			if !npcs.empty():
+				yield(get_tree().create_timer(1.0), "timeout")
+				_handle_interaction(player)
+			else:
+				player.input_pickable = true
+				emit_signal("place_cleared")
 		else:
-			player.input_pickable = true
-			emit_signal("place_cleared")
+			player.player_died()
 	else:
-		player.player_died()
+		player.input_pickable = true
 
 func _fight(player: Player, ennemy: Ennemy):
 	if player.power > ennemy.power:

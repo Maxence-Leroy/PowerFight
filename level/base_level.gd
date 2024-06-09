@@ -4,6 +4,7 @@ class_name BaseLevel
 
 enum LevelObjective {KILL_EVERYONE, GET_OBJECTIVES}
 export(LevelObjective) var objective
+export(int) var level_id
 
 var player: Player = null
 var moves = 0
@@ -84,11 +85,30 @@ func _on_fight_place_cleared():
 
 func _on_success():
 	success_label.text = "C'est gagné en " + str(moves) + " coups !"
+	_save(level_id, moves)
 	if Constants.has_next_level():
 		success_button.text = "Continue"
 	else:
 		success_button.text = "Fin du jeu"
 	success_container.show()
+
+func _save(id: int, nb_moves: int):
+	var str_id = str(id)
+	var path = "user://savegame.save"
+	var save_game = File.new()
+	save_game.open(path, File.READ)
+	var dict = {}
+	if save_game.get_len() > 0:
+		dict = parse_json(save_game.get_line())
+	save_game.close()
+	save_game.open(path, File.WRITE)
+	if dict.has(str_id):
+		if nb_moves < dict[str_id]:
+			dict[str_id] = nb_moves
+	else:
+		dict[str_id] = nb_moves
+	save_game.store_line(to_json(dict))
+	save_game.close()
 
 func _on_restart_pressed():
 	var error = get_tree().reload_current_scene()
