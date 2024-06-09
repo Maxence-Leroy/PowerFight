@@ -6,9 +6,11 @@ enum LevelObjective {KILL_EVERYONE, GET_OBJECTIVES}
 export(LevelObjective) var objective
 
 var player: Player = null
+var moves = 0
 onready var game_over_container: CenterContainer = $CanvasLayer/GameOverContainer
 onready var success_container: CenterContainer = $CanvasLayer/SuccessContainer
 onready var success_button: Button = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/ContinueButton
+onready var success_label: Label = $CanvasLayer/SuccessContainer/PanelContainer/VBoxContainer/Label
 onready var rooms: Node2D = $Rooms
 onready var camera: PFCamera = $PFCamera
 
@@ -25,10 +27,9 @@ func _ready():
 		if error != OK:
 			print("Impossible de connecter le signal player_died : " + str(error))
 	
-	var children = get_children()
-	for child in children:
-		if child is FightPlace:
-			child.connect("place_cleared", self, "_on_fight_place_cleared")
+	for room in rooms.get_children():
+		if room is FightPlace:
+			room.connect("place_cleared", self, "_on_fight_place_cleared")
 
 func _place_rooms():
 	var list_of_rooms = rooms.get_children()
@@ -66,6 +67,7 @@ func _on_player_moved_to_new_place(new_place: Area2D):
 	var place = new_place as FightPlace
 	if place == null:
 		return
+	moves += 1
 	place.add_player(player)
 
 func _on_player_died():
@@ -81,6 +83,7 @@ func _on_fight_place_cleared():
 			_on_success()
 
 func _on_success():
+	success_label.text = "C'est gagné en " + str(moves) + " coups !"
 	if Constants.has_next_level():
 		success_button.text = "Continue"
 	else:
