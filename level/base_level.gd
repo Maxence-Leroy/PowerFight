@@ -86,10 +86,9 @@ func _on_fight_place_cleared():
 func _on_success():
 	success_label.text = "C'est gagné en " + str(moves) + " coups !"
 	_save(level_id, moves)
-	if Constants.has_next_level():
-		success_button.text = "Continue"
-	else:
-		success_button.text = "Fin du jeu"
+	if !Constants.has_next_level():
+		success_button.hide()
+		
 	success_container.show()
 
 func _save(id: int, nb_moves: int):
@@ -118,3 +117,8 @@ func _on_restart_pressed():
 func _on_next_pressed():
 	if Constants.has_next_level():
 		Constants.go_to_next_level()
+
+func _on_go_back_to_menu_pressed():
+	var error = get_tree().change_scene("res://level_selector/level_selector.tscn")
+	if error != OK:
+		print("Impossible de retourner au menu : " + str(error))
