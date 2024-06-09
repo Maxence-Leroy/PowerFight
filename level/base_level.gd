@@ -52,10 +52,11 @@ func _place_rooms():
 			room_width / 2 + id_column * (room_width + space_between_columns),
 			room_height / 2 +id_line * (room_height + space_between_lines)
 		)
-	camera.limit_top = 0
-	camera.limit_bottom = (max_line + 1) * room_height + max_line * space_between_lines
-	camera.limit_left = 0
-	camera.limit_right = (max_column + 1) * room_width + max_column * space_between_columns
+	var limit_top = 0
+	var limit_bottom = (max_line + 1) * room_height + max_line * space_between_lines
+	var limit_left = 0
+	var limit_right = (max_column + 1) * room_width + max_column * space_between_columns
+	camera.set_limits(limit_top, limit_bottom, limit_left, limit_right)
 
 func _all_objectives_collected():
 	var objectives = get_tree().get_nodes_in_group(Constants.objective_group)
