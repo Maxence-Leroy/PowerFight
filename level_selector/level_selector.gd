@@ -12,6 +12,7 @@ func _ready():
 		var button = Button.new()
 		button.text = str(i)
 		button.size_flags_horizontal = SIZE_EXPAND_FILL
+		button.rect_min_size = Vector2(0, 50)
 		button.connect("pressed", self, "_on_press_level_selection", [i])
 		level_grid.add_child(button)
 
