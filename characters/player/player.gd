@@ -10,6 +10,11 @@ var grabbed_offset = Vector2()
 var colliding_places = []
 var initial_position = Vector2()
 
+@onready var animation = $AnimatedSprite2D
+
+func _ready():
+	animation.play("idle")
+
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed:

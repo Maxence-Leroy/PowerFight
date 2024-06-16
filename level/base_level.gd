@@ -107,7 +107,7 @@ func _save(id: int, nb_moves: int):
 			dict[str_id] = nb_moves
 	else:
 		dict[str_id] = nb_moves
-	save_game.store_line(JSON.new().stringify(dict))
+	save_game.store_line(JSON.stringify(dict))
 	save_game.close()
 
 func _on_restart_pressed():

@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://c15n4jf5wi2v3"]
+
+[ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1_l7wyc"]
+[ext_resource type="Script" path="res://characters/player/player.gd" id="2_w5dkg"]
+[ext_resource type="Texture2D" uid="uid://dsea4l4rtpcoe" path="res://characters/player/res/Soldier-Idle.png" id="3_rkrtu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki2ym"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(40, 38, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp57a"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(140, 38, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw1vh"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(240, 38, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki4xc"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(340, 38, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntquw"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(440, 38, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a40de"]
+atlas = ExtResource("3_rkrtu")
+region = Rect2(540, 38, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3t7y3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki2ym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sp57a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw1vh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki4xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntquw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a40de")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Player" instance=ExtResource("1_l7wyc")]
+script = ExtResource("2_w5dkg")
+
+[node name="PowerLabel" parent="." index="1"]
+offset_top = 0.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="ObjectiveLabel" parent="." index="2"]
+offset_left = -23.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="3"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_3t7y3")
+animation = &"idle"
+
+[connection signal="area_entered" from="." to="." method="_on_colliding_start"]
+[connection signal="area_exited" from="." to="." method="_on_colling_finish"]
