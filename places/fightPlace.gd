@@ -54,6 +54,7 @@ func _ready():
 			character_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - npcs.size() - 1)
 			character.position = character_position
 			npcs.append(character)
+		character.position.y = Constants.y_offset_character_in_place
 		character.set_power(character_power[i])
 		if character_objective[i]:
 			character.set_is_objective()
@@ -68,6 +69,7 @@ func _move_player(player: Player):
 	add_child(player)
 	var player_position = Vector2()
 	player_position.x =  -get_width() / 2 + player.get_width() / 2 + 5
+	player_position.y = Constants.y_offset_character_in_place
 	player.position = player_position
 	await get_tree().create_timer(1.0).timeout
 	_handle_interaction(player)

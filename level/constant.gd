@@ -7,6 +7,8 @@ var objective_group: String = "objective"
 
 var current_stage = 1
 
+var y_offset_character_in_place = 14
+
 func go_to_next_level():
 	current_stage += 1
 	var error = get_tree().change_scene_to_file(level_base_path + str(current_stage) + ".tscn")
