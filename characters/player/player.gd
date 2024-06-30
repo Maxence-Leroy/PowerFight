@@ -12,6 +12,8 @@ var initial_position = Vector2()
 
 @onready var animation = $AnimatedSprite2D
 
+var alive = true
+
 func _ready():
 	animation.play("idle")
 
@@ -29,6 +31,10 @@ func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and can_grab:
 		position = get_global_mouse_position() + grabbed_offset
 
+func _on_animation_finished():
+	if alive:
+		animation.play("idle")
+
 func _on_colliding_start(area: Area2D):
 	if area.is_in_group(Constants.fight_place_group):
 		colliding_places.append(area)
@@ -41,6 +47,8 @@ func _on_colling_finish(area):
 			colliding_places.remove_at(place_index)
 
 func player_died():
+	alive = false
+	animation.play("death")
 	emit_signal("player_died_signal")
 
 func move_to_right_place():

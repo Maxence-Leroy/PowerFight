@@ -13,7 +13,11 @@ const EnnemyResource = preload("res://characters/ennemy.tscn")
 const PlayerResource = preload("res://characters/player/player.tscn")
 const AdditiveTreasureResource = preload("res://characters/additive_treasure.tscn")
 
+const player_speed = 50
+
+var rng = RandomNumberGenerator.new()
 var npcs = []
+var _player: Player = null
 
 func get_width():
 	return ($CollisionShape2D.shape as RectangleShape2D).extents.x * 2
@@ -67,13 +71,17 @@ func _move_player(player: Player):
 	player.position = player_position
 	await get_tree().create_timer(1.0).timeout
 	_handle_interaction(player)
-	
+
+func _process(delta):
+	if _player != null:
+		_player.position.x += player_speed * delta
+
 func _handle_interaction(player: Player):
 	if !npcs.is_empty():
 		var character = npcs[0]
 		var victory: bool
 		if character is Ennemy:
-			victory = _fight(player, character)	
+			victory = await _fight(player, character)	
 		elif character is AdditiveTreasure:
 			_take_treasure(player, character)
 			victory = true
@@ -92,6 +100,14 @@ func _handle_interaction(player: Player):
 		player.input_pickable = true
 
 func _fight(player: Player, ennemy: Ennemy):
+	var distance = ennemy.position.x - player.position.x - ennemy.get_width()
+	_player = player
+	player.animation.play("walk")
+	await get_tree().create_timer(distance / player_speed).timeout
+	_player = null
+	var attack_id = rng.randi_range(1,3)
+	player.animation.play("attack" + str(attack_id))
+	await get_tree().create_timer(2).timeout
 	if player.power > ennemy.power:
 		player.set_power(player.power + ennemy.power)
 		ennemy.queue_free()
@@ -99,11 +115,15 @@ func _fight(player: Player, ennemy: Ennemy):
 		return true
 	else:
 		ennemy.power += player.power
-		player.queue_free()
-		remove_child(player)
 		return false
 
 func _take_treasure(player: Player, treasure: AdditiveTreasure):
+	var distance = treasure.position.x - player.position.x
+	_player = player
+	player.animation.play("walk")
+	await get_tree().create_timer(distance / player_speed).timeout
+	_player = null
+	player.animation.play("idle")
 	player.set_power(player.power + treasure.power)
 	treasure.queue_free()
 	remove_child(treasure)
