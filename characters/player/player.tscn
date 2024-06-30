@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://c15n4jf5wi2v3"]
+[gd_scene load_steps=60 format=3 uid="uid://c15n4jf5wi2v3"]
 
 [ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1_l7wyc"]
 [ext_resource type="Script" path="res://characters/player/player.gd" id="2_w5dkg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ck5rignvo6lm" path="res://characters/player/res/Soldier-Attack03.png" id="5_olxye"]
 [ext_resource type="Texture2D" uid="uid://cqmc50bedmmf7" path="res://characters/player/res/Soldier-Death.png" id="6_3jrvo"]
 [ext_resource type="Texture2D" uid="uid://bpfyipq82brsm" path="res://characters/player/res/Soldier-Hurt.png" id="7_2xxnd"]
+[ext_resource type="Texture2D" uid="uid://6bhsddq8at21" path="res://characters/player/res/Soldier-Heal.png" id="7_p3eth"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ptarf"]
 atlas = ExtResource("3_qooum")
@@ -108,6 +109,22 @@ region = Rect2(230, 28, 40, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4hige"]
 atlas = ExtResource("6_3jrvo")
+region = Rect2(330, 28, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjerp"]
+atlas = ExtResource("7_p3eth")
+region = Rect2(30, 28, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_diw2g"]
+atlas = ExtResource("7_p3eth")
+region = Rect2(130, 28, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4g88w"]
+atlas = ExtResource("7_p3eth")
+region = Rect2(230, 28, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7mml"]
+atlas = ExtResource("7_p3eth")
 region = Rect2(330, 28, 40, 40)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5p6f8"]
@@ -281,6 +298,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_fjerp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_diw2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4g88w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7mml")
+}],
+"loop": false,
+"name": &"heal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5p6f8")
 }, {
 "duration": 1.0,
@@ -292,7 +326,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lqrc2")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -349,25 +383,29 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_ge8w6"]
+font_color = Color(0, 1, 0, 1)
+
 [node name="Player" instance=ExtResource("1_l7wyc")]
 script = ExtResource("2_w5dkg")
 
-[node name="PowerLabel" parent="." index="1"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_3t7y3")
+animation = &"heal"
+
+[node name="PowerLabel" parent="." index="2"]
 offset_top = 0.0
 offset_bottom = 23.0
 grow_horizontal = 2
+label_settings = SubResource("LabelSettings_ge8w6")
 
-[node name="ObjectiveLabel" parent="." index="2"]
+[node name="ObjectiveLabel" parent="." index="3"]
 offset_left = -23.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 23.0
 grow_horizontal = 0
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="3"]
-scale = Vector2(5, 5)
-sprite_frames = SubResource("SpriteFrames_3t7y3")
-animation = &"hurt"
 
 [connection signal="area_entered" from="." to="." method="_on_colliding_start"]
 [connection signal="area_exited" from="." to="." method="_on_colling_finish"]

@@ -125,7 +125,7 @@ func _take_treasure(player: Player, treasure: AdditiveTreasure):
 	player.animation.play("walk")
 	await get_tree().create_timer(distance / player_speed).timeout
 	_player = null
-	player.animation.play("idle")
+	player.animation.play("heal")
 	player.set_power(player.power + treasure.power)
 	treasure.queue_free()
 	remove_child(treasure)
