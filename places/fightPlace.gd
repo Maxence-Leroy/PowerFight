@@ -11,7 +11,7 @@ enum CharacterType {PLAYER, ENNEMY, ADDITIVE_TREASURE }
 
 const EnnemyResource = preload("res://characters/ennemy.tscn")
 const PlayerResource = preload("res://characters/player/player.tscn")
-const AdditiveTreasureResource = preload("res://characters/additive_treasure.tscn")
+const AdditiveTreasureResource = preload("res://characters/additive_treasure/additive_treasure.tscn")
 
 const player_speed = 50
 
