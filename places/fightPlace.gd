@@ -109,14 +109,16 @@ func _fight(player: Player, enemy: Enemy):
 	_player = null
 	var attack_id = rng.randi_range(1,3)
 	player.animation.play("attack" + str(attack_id))
-	await get_tree().create_timer(2).timeout
 	if player.power > enemy.power:
+		enemy.enemy_died()
+		await player.animation.animation_finished
 		player.set_power(player.power + enemy.power)
-		enemy.queue_free()
-		remove_child(enemy)
 		return true
 	else:
-		enemy.power += player.power
+		await player.animation.animation_finished
+		await enemy.attack()
+		enemy.set_power(player.power + enemy.power)
+		player.set_power(0)
 		return false
 
 func _take_treasure(player: Player, treasure: AdditiveTreasure):

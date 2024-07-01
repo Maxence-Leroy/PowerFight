@@ -14,3 +14,5 @@ func set_is_objective():
 func set_power(value: int):
 	power = value
 	$PowerLabel.text = str(value)
+	if value == 0:
+		$PowerLabel.hide()

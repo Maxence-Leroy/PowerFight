@@ -11,6 +11,7 @@ var colliding_places = []
 var initial_position = Vector2()
 
 @onready var animation = $AnimatedSprite2D
+@onready var power_label = $PowerLabel
 
 var alive = true
 
