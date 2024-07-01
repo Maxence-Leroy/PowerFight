@@ -4,12 +4,12 @@ class_name FightPlace
 
 signal place_cleared
 
-enum CharacterType {PLAYER, ENNEMY, ADDITIVE_TREASURE }
+enum CharacterType {PLAYER, ENEMY, ADDITIVE_TREASURE }
 @export var character_power: Array[int]
 @export var character_type: Array[CharacterType]
 @export var character_objective: Array[bool]
 
-const EnnemyResource = preload("res://characters/ennemy.tscn")
+const EnemyResource = preload("res://characters/enemy/enemy.tscn")
 const PlayerResource = preload("res://characters/player/player.tscn")
 const AdditiveTreasureResource = preload("res://characters/additive_treasure/additive_treasure.tscn")
 
@@ -46,8 +46,8 @@ func _ready():
 			player_position.x = -get_width() / 2 + character.get_width() / 2 + 5
 			character.position = player_position
 		else:
-			if character_type[i] == CharacterType.ENNEMY:
-				character = EnnemyResource.instantiate()
+			if character_type[i] == CharacterType.ENEMY:
+				character = EnemyResource.instantiate()
 			elif character_type[i] == CharacterType.ADDITIVE_TREASURE:
 				character = AdditiveTreasureResource.instantiate()
 			var character_position = Vector2()
@@ -82,7 +82,7 @@ func _handle_interaction(player: Player):
 	if !npcs.is_empty():
 		var character = npcs[0]
 		var victory: bool
-		if character is Ennemy:
+		if character is Enemy:
 			victory = await _fight(player, character)	
 		elif character is AdditiveTreasure:
 			_take_treasure(player, character)
@@ -101,8 +101,8 @@ func _handle_interaction(player: Player):
 	else:
 		player.input_pickable = true
 
-func _fight(player: Player, ennemy: Ennemy):
-	var distance = ennemy.position.x - player.position.x - ennemy.get_width()
+func _fight(player: Player, enemy: Enemy):
+	var distance = enemy.position.x - player.position.x - enemy.get_width()
 	_player = player
 	player.animation.play("walk")
 	await get_tree().create_timer(distance / player_speed).timeout
@@ -110,13 +110,13 @@ func _fight(player: Player, ennemy: Ennemy):
 	var attack_id = rng.randi_range(1,3)
 	player.animation.play("attack" + str(attack_id))
 	await get_tree().create_timer(2).timeout
-	if player.power > ennemy.power:
-		player.set_power(player.power + ennemy.power)
-		ennemy.queue_free()
-		remove_child(ennemy)
+	if player.power > enemy.power:
+		player.set_power(player.power + enemy.power)
+		enemy.queue_free()
+		remove_child(enemy)
 		return true
 	else:
-		ennemy.power += player.power
+		enemy.power += player.power
 		return false
 
 func _take_treasure(player: Player, treasure: AdditiveTreasure):

@@ -1,3 +1,3 @@
 extends Character
 
-class_name Ennemy
+class_name Enemy

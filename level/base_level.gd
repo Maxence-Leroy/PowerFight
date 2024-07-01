@@ -76,8 +76,8 @@ func _on_player_died():
 
 func _on_fight_place_cleared():
 	if objective == LevelObjective.KILL_EVERYONE:
-		var ennemy = find_child("Ennemy", true, false)
-		if ennemy == null:
+		var enemy = find_child("Enemy", true, false)
+		if enemy == null:
 			_on_success()
 	elif objective == LevelObjective.GET_OBJECTIVES:
 		if _all_objectives_collected():

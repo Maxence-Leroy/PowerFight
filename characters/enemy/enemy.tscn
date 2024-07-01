@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bj58ryvqn4jx3"]
 
-[ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1"]
-[ext_resource type="Script" path="res://characters/ennemy.gd" id="2"]
+[ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1_vuydi"]
+[ext_resource type="Script" path="res://characters/enemy/enemy.gd" id="2_6e13l"]
 
 [sub_resource type="Gradient" id="1"]
 interpolation_mode = 1
@@ -12,15 +12,21 @@ gradient = SubResource("1")
 width = 1
 height = 1
 
-[node name="Ennemy" instance=ExtResource("1")]
-script = ExtResource("2")
+[node name="Enemy" instance=ExtResource("1_vuydi")]
+script = ExtResource("2_6e13l")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="1"]
 scale = Vector2(100, 100)
 texture = SubResource("2")
 
 [node name="PowerLabel" parent="." index="2"]
-anchors_preset = 5
+offset_top = 0.0
+offset_bottom = 23.0
+grow_horizontal = 2
 
 [node name="ObjectiveLabel" parent="." index="3"]
-anchors_preset = 1
+offset_left = -23.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 23.0
+grow_horizontal = 0

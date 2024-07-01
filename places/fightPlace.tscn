@@ -8,6 +8,9 @@ size = Vector2(400, 150)
 
 [node name="FightPlace" type="Area2D"]
 script = ExtResource("1")
+character_power = null
+character_type = null
+character_objective = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
