@@ -1,23 +1,67 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj58ryvqn4jx3"]
+[gd_scene load_steps=11 format=3 uid="uid://bj58ryvqn4jx3"]
 
 [ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1_vuydi"]
 [ext_resource type="Script" path="res://characters/enemy/enemy.gd" id="2_6e13l"]
+[ext_resource type="Texture2D" uid="uid://byuquotd5il0f" path="res://characters/enemy/res/orc/Orc-Idle.png" id="3_tsgrt"]
 
-[sub_resource type="Gradient" id="1"]
-interpolation_mode = 1
-colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_diajy"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(32, 30, 40, 40)
 
-[sub_resource type="GradientTexture2D" id="2"]
-gradient = SubResource("1")
-width = 1
-height = 1
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs2wf"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(132, 30, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8l2s"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(232, 30, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajukg"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(332, 30, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_71qua"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(432, 30, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be7wv"]
+atlas = ExtResource("3_tsgrt")
+region = Rect2(532, 30, 40, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mkbfu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_diajy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs2wf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8l2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajukg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_71qua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_be7wv")
+}],
+"loop": true,
+"name": &"orc_idle",
+"speed": 5.0
+}]
 
 [node name="Enemy" instance=ExtResource("1_vuydi")]
 script = ExtResource("2_6e13l")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
-scale = Vector2(100, 100)
-texture = SubResource("2")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="1"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_mkbfu")
+animation = &"orc_idle"
+flip_h = true
 
 [node name="PowerLabel" parent="." index="2"]
 offset_top = 0.0
