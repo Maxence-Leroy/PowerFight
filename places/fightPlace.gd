@@ -109,13 +109,13 @@ func _fight(player: Player, enemy: Enemy):
 	_player = null
 	var attack_id = rng.randi_range(1,3)
 	player.animation.play("attack" + str(attack_id))
+	await player.animation.animation_finished
 	if player.power > enemy.power:
+		var enemy_power = enemy.power
 		enemy.enemy_died()
-		await player.animation.animation_finished
-		player.set_power(player.power + enemy.power)
+		player.set_power(player.power + enemy_power)
 		return true
 	else:
-		await player.animation.animation_finished
 		await enemy.attack()
 		enemy.set_power(player.power + enemy.power)
 		player.set_power(0)
