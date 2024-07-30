@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c5n5lsb5ohvpd" path="res://places/res/background.png" id="2_l22c6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(400, 150)
+size = Vector2(400, 136)
 
 [node name="FightPlace" type="Area2D"]
 script = ExtResource("1")
@@ -13,5 +13,5 @@ script = ExtResource("1")
 shape = SubResource("1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.63, 1.63)
+scale = Vector2(1.45, 1.45)
 texture = ExtResource("2_l22c6")

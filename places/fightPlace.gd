@@ -51,7 +51,7 @@ func _ready():
 			elif character_type[i] == CharacterType.ADDITIVE_TREASURE:
 				character = AdditiveTreasureResource.instantiate()
 			var character_position = Vector2()
-			character_position.x = get_width() / 2 - character.get_width() / 2 - 5 - 105*(number_of_characters_not_player - npcs.size() - 1)
+			character_position.x = get_width() / 2 - character.get_width() / 2 - 15 - 105*(number_of_characters_not_player - npcs.size() - 1)
 			character.position = character_position
 			npcs.append(character)
 		character.position.y = Constants.y_offset_character_in_place

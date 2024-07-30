@@ -37,10 +37,8 @@ func _place_rooms():
 	var list_of_rooms = rooms.get_children()
 	var room_width = (list_of_rooms[0] as FightPlace).get_width()
 	var room_height = (list_of_rooms[0] as FightPlace).get_height()
-	var screen_size = get_viewport_rect().size
-	var number_of_columns = 2
-	var space_between_columns = (screen_size.x - number_of_columns * room_width) / (number_of_columns - 1)
-	var space_between_lines = 20
+	var space_between_columns = 5
+	var space_between_lines = 5
 	var max_line = 0
 	var max_column = 0
 	for room in list_of_rooms:
@@ -55,9 +53,9 @@ func _place_rooms():
 			room_width / 2 + id_column * (room_width + space_between_columns),
 			room_height / 2 +id_line * (room_height + space_between_lines)
 		)
-	var limit_top = 0
+	var limit_top = -5
 	var limit_bottom = (max_line + 1) * room_height + max_line * space_between_lines
-	var limit_left = 0
+	var limit_left = -5
 	var limit_right = (max_column + 1) * room_width + max_column * space_between_columns
 	camera.set_limits(limit_top, limit_bottom, limit_left, limit_right)
 
