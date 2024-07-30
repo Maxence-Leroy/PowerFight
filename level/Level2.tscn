@@ -46,12 +46,12 @@ layout_mode = 2
 
 [node name="1-0" parent="Rooms" index="0" instance=ExtResource("2")]
 position = Vector2(703, 249)
-character_power = [4, 2]
-character_type = [1, 2]
-character_objective = [false, true]
+character_power = Array[int]([4, 2])
+character_type = Array[int]([1, 2])
+character_objective = Array[bool]([false, true])
 
 [node name="0-0" parent="Rooms" index="1" instance=ExtResource("2")]
 position = Vector2(199, 74)
-character_power = [5]
-character_type = [0]
-character_objective = [false]
+character_power = Array[int]([5])
+character_type = Array[int]([0])
+character_objective = Array[bool]([false])
