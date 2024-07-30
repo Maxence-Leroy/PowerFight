@@ -1,0 +1,115 @@
+[gd_scene load_steps=23 format=3 uid="uid://wj13jf30wtis"]
+
+[ext_resource type="PackedScene" uid="uid://ducj4fa1dbqvc" path="res://characters/character.tscn" id="1_t4r3o"]
+[ext_resource type="Script" path="res://characters/subtraction_treasure/subtraction_treasure.gd" id="2_k3y4n"]
+[ext_resource type="Texture2D" uid="uid://cipjntlkv71om" path="res://characters/subtraction_treasure/res/bomb/on/1.png" id="3_yxcdo"]
+[ext_resource type="Texture2D" uid="uid://br013uu3jotbp" path="res://characters/subtraction_treasure/res/bomb/on/2.png" id="4_ugjlu"]
+[ext_resource type="Texture2D" uid="uid://cfln0hd7xwvbb" path="res://characters/subtraction_treasure/res/bomb/on/3.png" id="5_a5dfc"]
+[ext_resource type="Texture2D" uid="uid://b4obbcaj5wnd8" path="res://characters/subtraction_treasure/res/bomb/on/4.png" id="6_ppxjw"]
+[ext_resource type="Texture2D" uid="uid://chajdujqn8l8p" path="res://characters/subtraction_treasure/res/bomb/on/5.png" id="7_5wotg"]
+[ext_resource type="Texture2D" uid="uid://eoa7i8j05ja1" path="res://characters/subtraction_treasure/res/bomb/on/6.png" id="8_mghft"]
+[ext_resource type="Texture2D" uid="uid://b6wg86aqw6ma8" path="res://characters/subtraction_treasure/res/bomb/on/7.png" id="9_6hpky"]
+[ext_resource type="Texture2D" uid="uid://c72k5o88i3s4t" path="res://characters/subtraction_treasure/res/bomb/on/8.png" id="10_elkq4"]
+[ext_resource type="Texture2D" uid="uid://f012ebpp1oc7" path="res://characters/subtraction_treasure/res/bomb/on/9.png" id="11_ur0nc"]
+[ext_resource type="Texture2D" uid="uid://qo8mjaluvr44" path="res://characters/subtraction_treasure/res/bomb/on/10.png" id="12_2h8j7"]
+[ext_resource type="Texture2D" uid="uid://dqnypwr03miex" path="res://characters/subtraction_treasure/res/bomb/explotion/1.png" id="13_ymjvg"]
+[ext_resource type="Texture2D" uid="uid://dg1ftvl5vxrn" path="res://characters/subtraction_treasure/res/bomb/explotion/2.png" id="14_434j3"]
+[ext_resource type="Texture2D" uid="uid://bw4lmdvk0tjla" path="res://characters/subtraction_treasure/res/bomb/explotion/3.png" id="15_d80hs"]
+[ext_resource type="Texture2D" uid="uid://ckanp1bsdmvn4" path="res://characters/subtraction_treasure/res/bomb/explotion/4.png" id="16_ivwrj"]
+[ext_resource type="Texture2D" uid="uid://dv71wa6e4r7m0" path="res://characters/subtraction_treasure/res/bomb/explotion/5.png" id="17_3lhu0"]
+[ext_resource type="Texture2D" uid="uid://cbmtpy0jfqi1x" path="res://characters/subtraction_treasure/res/bomb/explotion/6.png" id="18_svksr"]
+[ext_resource type="Texture2D" uid="uid://ddj8htg1g060" path="res://characters/subtraction_treasure/res/bomb/explotion/7.png" id="19_k387p"]
+[ext_resource type="Texture2D" uid="uid://di57m2fmhuwy3" path="res://characters/subtraction_treasure/res/bomb/explotion/8.png" id="20_s0ewe"]
+[ext_resource type="Texture2D" uid="uid://cayk1s2gh7flw" path="res://characters/subtraction_treasure/res/bomb/explotion/9.png" id="21_23p6r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dd1cq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_yxcdo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ugjlu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_a5dfc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ppxjw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5wotg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mghft")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_6hpky")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_elkq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ur0nc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_2h8j7")
+}],
+"loop": true,
+"name": &"bomb_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_ymjvg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_434j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_d80hs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ivwrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_3lhu0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_svksr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_k387p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_s0ewe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_23p6r")
+}],
+"loop": false,
+"name": &"bomb_used",
+"speed": 10.0
+}]
+
+[node name="SubtractionTreasure" instance=ExtResource("1_t4r3o")]
+script = ExtResource("2_k3y4n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
+position = Vector2(0, -23)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_dd1cq")
+animation = &"bomb_idle"
+frame_progress = 0.837857
+
+[node name="PowerLabel" parent="." index="2"]
+offset_top = 0.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="ObjectiveLabel" parent="." index="3"]
+offset_left = -23.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 23.0
+grow_horizontal = 0

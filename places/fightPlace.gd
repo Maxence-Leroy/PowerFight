@@ -4,7 +4,7 @@ class_name FightPlace
 
 signal place_cleared
 
-enum CharacterType {PLAYER, ENEMY, ADDITIVE_TREASURE }
+enum CharacterType {PLAYER, ENEMY, ADDITIVE_TREASURE, SUBTRACTION_TREASURE }
 @export var character_power: Array[int]
 @export var character_type: Array[CharacterType]
 @export var character_objective: Array[bool]
@@ -12,6 +12,7 @@ enum CharacterType {PLAYER, ENEMY, ADDITIVE_TREASURE }
 const EnemyResource = preload("res://characters/enemy/enemy.tscn")
 const PlayerResource = preload("res://characters/player/player.tscn")
 const AdditiveTreasureResource = preload("res://characters/additive_treasure/additive_treasure.tscn")
+const SubtractionTreasureResource = preload("res://characters/subtraction_treasure/subtraction_treasure.tscn")
 
 const player_speed = 50
 
@@ -50,6 +51,8 @@ func _ready():
 				character = EnemyResource.instantiate()
 			elif character_type[i] == CharacterType.ADDITIVE_TREASURE:
 				character = AdditiveTreasureResource.instantiate()
+			elif character_type[i] == CharacterType.SUBTRACTION_TREASURE:
+				character = SubtractionTreasureResource.instantiate()
 			var character_position = Vector2()
 			character_position.x = get_width() / 2 - character.get_width() / 2 - 15 - 105*(number_of_characters_not_player - npcs.size() - 1)
 			character.position = character_position
@@ -85,9 +88,10 @@ func _handle_interaction(player: Player):
 		if character is Enemy:
 			victory = await _fight(player, character)	
 		elif character is AdditiveTreasure:
-			_take_treasure(player, character)
+			_take_additive_treasure(player, character)
 			victory = true
-		
+		elif character is SubtractionTreasure:
+			victory = await _take_subtraction_treasure(player, character)
 		if victory:
 			npcs.remove_at(0)
 			if !npcs.is_empty():
@@ -121,7 +125,7 @@ func _fight(player: Player, enemy: Enemy):
 		player.set_power(0)
 		return false
 
-func _take_treasure(player: Player, treasure: AdditiveTreasure):
+func _take_additive_treasure(player: Player, treasure: AdditiveTreasure):
 	var distance = treasure.position.x - player.position.x
 	_player = player
 	player.animation.play("walk")
@@ -131,3 +135,18 @@ func _take_treasure(player: Player, treasure: AdditiveTreasure):
 	player.set_power(player.power + treasure.power)
 	treasure.queue_free()
 	remove_child(treasure)
+	
+func _take_subtraction_treasure(player: Player, treasure: SubtractionTreasure):
+	var distance = treasure.position.x - player.position.x
+	_player = player
+	player.animation.play("walk")
+	await get_tree().create_timer(distance / player_speed).timeout
+	_player = null
+	var treasure_power = treasure.power
+	treasure.treasure_taken()
+	if player.power > treasure.power:
+		player.set_power(player.power - treasure_power)
+		return true
+	else:
+		player.set_power(0)
+		return false
