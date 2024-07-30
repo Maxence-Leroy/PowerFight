@@ -390,11 +390,13 @@ font_color = Color(0, 1, 0, 1)
 script = ExtResource("2_w5dkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." index="0"]
+z_index = 10
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_3t7y3")
 animation = &"heal"
 
 [node name="PowerLabel" parent="." index="2"]
+z_index = 11
 offset_top = 0.0
 offset_bottom = 23.0
 grow_horizontal = 2
