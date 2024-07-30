@@ -21,6 +21,7 @@ func _ready():
 	_place_rooms()
 	player = find_child("Player", true, false)
 	if player != null:
+		player.animation.z_index = 10
 		var error = player.connect("moved_to_place", Callable(self, "_on_player_moved_to_new_place"))
 		if error != OK:
 			print("Impossible de connecter le signal moved_to_place : " + str(error))
